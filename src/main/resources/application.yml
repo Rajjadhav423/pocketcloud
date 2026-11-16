@@ -1,0 +1,32 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: pocketcloud
+  threads:
+    virtual:
+      enabled: true          # Java 21 virtual threads for every request
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/pocketcloud}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: validate     # Flyway owns the schema; Hibernate only checks it
+    open-in-view: false
+
+pocketcloud:
+  build:
+    enabled: ${BUILD_WORKER_ENABLED:true}
+    work-dir: ${POCKETCLOUD_DATA_DIR:./data}/deployments
+    poll-interval: 2s
+    timeout: 10m
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
