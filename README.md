@@ -3,7 +3,13 @@
 A self-hosted mini PaaS (think a tiny Vercel/Heroku) built to learn how deployment platforms work end to end.
 Target host: a spare ARM64 Android phone running Termux. Development happens on a laptop first.
 
-**Stack:** Java 21 · Spring Boot 4 · Gradle · PostgreSQL · Flyway · JPA
+**Stack:** Java 21 · Spring Boot 4 · Gradle · PostgreSQL · Flyway · JPA · Next.js (dashboard)
+
+```
+MiniCloud/
+├── server/   Spring Boot control plane (API, build worker) — run Gradle commands from here
+└── client/   Next.js dashboard
+```
 
 ## API
 
@@ -44,10 +50,11 @@ marked `FAILED`. Settings live under `pocketcloud.build` in `application.yml`.
 
 ## Run locally
 
-Put `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` in a `.env` file in the project root (copy `.env.example`);
+Put `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` in `server/.env` (copy `server/.env.example`);
 it is git-ignored and loaded by `springboot4-dotenv`. Real env vars override it. Then:
 
 ```bash
+cd server
 ./gradlew bootRun
 ```
 
